@@ -1,6 +1,5 @@
 ﻿using CardGames.Shared.Models;
 using CardGames.Shared.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -11,71 +10,33 @@ namespace CardGames.Shared.Tests
     {
         #region MemberData
 
-        public static IEnumerable<object[]> Get_Default_Cards_Theory_Data()
+        public static IEnumerable<object[]> Get_Random_Cards_Theroy_Data()
             => new List<object[]>
             {
                 new object[]
                 {
-                    Array.Empty<Card>(),
-                },
-                new object[]
-                {
-                    new Card[]
-                    {
-                        new Card(CardNameValue.Ace, Suit.Spades),
-                    }
-                },
-                new object[]
-                {
-                    new Card[]
-                    {
-                        new Card(CardNameValue.Five, Suit.Spades),
-                        new Card(CardNameValue.Eight, Suit.Hearts),
-                        new Card(CardNameValue.King, Suit.Clubs),
-                        new Card(CardNameValue.Jack, Suit.Clubs),
-                    },
-                },
-                new object[]
-                {
-                    new Card[]
-                    {
-                        new Card(CardNameValue.Three, Suit.Diamonds),
-                        new Card(CardNameValue.Ace, Suit.Clubs),
-                        new Card(CardNameValue.Two, Suit.Hearts),
-                        new Card(CardNameValue.Queen, Suit.Spades),
-                    },
-                },
-                new object[]
-                {
-                    new Card[]
-                    {
-                        new Card(CardNameValue.Ace, Suit.Clubs),
-                        new Card(CardNameValue.Ace, Suit.Diamonds),
-                        new Card(CardNameValue.Ace, Suit.Hearts),
-                        new Card(CardNameValue.Ace, Suit.Spades),
-                    },
-                },
-                new object[]
-                {
-                    new Card[]
-                    {
-                        new Card(CardNameValue.Seven, Suit.Clubs),
-                        new Card(CardNameValue.Six, Suit.Clubs),
-                        new Card(CardNameValue.Four, Suit.Clubs),
-                        new Card(CardNameValue.Ten, Suit.Clubs),
-                    },
+                    Enumerable
+                        .Range(1, RNG.Next(1, 53))
+                        .Select(cardIndex => new Card((CardNameValue)RNG.Next(0, 14), (Suit)RNG.Next(0, 5)))
+                        .ToArray(),
                 },
             };
 
-        public static IEnumerable<object[]> Get_Default_Cards_Theory_Data(int skip)
-            => Get_Default_Cards_Theory_Data().Skip(skip);
-
-        public static IEnumerable<object[]> Get_Default_Cards_Theory_Data(int skip, int take)
-            => Get_Default_Cards_Theory_Data().Skip(skip).Take(take);
+        public static IEnumerable<object[]> Get_Random_Cards_Theroy_Data(int generateMin)
+            => new List<object[]>
+            {
+                new object[]
+                {
+                    Enumerable
+                        .Range(1, RNG.Next(generateMin, 53))
+                        .Select(cardIndex => new Card((CardNameValue)RNG.Next(0, 14), (Suit)RNG.Next(0, 5)))
+                        .ToArray(),
+                },
+            };
 
         #endregion MemberData
 
-        [Theory, MemberData(nameof(Get_Default_Cards_Theory_Data))]
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 5)]
         public void Cards_NoShuffleShouldHaveSameLength_Theory(Card[] items)
         {
             var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: false);
@@ -83,7 +44,7 @@ namespace CardGames.Shared.Tests
             Assert.Equal(items.Length, deck.Cards.Count);
         }
 
-        [Theory, MemberData(nameof(Get_Default_Cards_Theory_Data))]
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 25)]
         public void Cards_NoShuffleShouldEqual_Theory(Card[] items)
         {
             var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: false);
@@ -91,7 +52,7 @@ namespace CardGames.Shared.Tests
             Assert.Equal(items, deck.Cards.ToArray());
         }
 
-        [Theory, MemberData(nameof(Get_Default_Cards_Theory_Data))]
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 25)]
         public void Cards_ShuffleShouldHaveSameLength_Theory(Card[] items)
         {
             var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: true);
@@ -99,12 +60,78 @@ namespace CardGames.Shared.Tests
             Assert.Equal(items.Length, deck.Cards.Count);
         }
 
-        [Theory, MemberData(nameof(Get_Default_Cards_Theory_Data), 2)]
-        public void Cards_ShuffleShouldEqual_Theory(Card[] items)
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 25)]
+        public void Cards_ShuffleShouldNotEqual_Theory(Card[] items)
         {
             var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: true);
 
             Assert.NotEqual(items, deck.Cards.ToArray());
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 5)]
+        public void Deal_NoShuffleShouldRemoveOneCard_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: false);
+            var expected = deck.Deal();
+            Assert.DoesNotContain(expected, deck.Cards);
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 5)]
+        public void Deal_ShuffleShouldRemoveOneCard_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: true);
+            var expected = deck.Deal();
+            Assert.DoesNotContain(expected, deck.Cards);
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 3)]
+        public void Deal_NoShuffleAtIndexShouldRemoveOneCard_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: false);
+            var expected = deck.Deal(3);
+            Assert.DoesNotContain(expected, deck.Cards);
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 3)]
+        public void Deal_ShuffleAtIndexShouldRemoveOneCard_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: true);
+            var expected = deck.Deal(3);
+            Assert.DoesNotContain(expected, deck.Cards);
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 25)]
+        public void Deal_NoShuffleShouldEqual_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: false);
+            var expected = items[0];
+            Assert.Equal(expected, deck.Deal());
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 5)]
+        public void Deal_NoShuffleAtIndexShouldEqual_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: false);
+            var index = items.Length - 1;
+            var expected = items[index];
+            Assert.Equal(expected, deck.Deal(index));
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 25)]
+        public void Deal_ShuffleShouldNotEqual_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: true);
+            var expected = items[0];
+            Assert.NotEqual(expected, deck.Deal());
+        }
+
+        [Theory, MemberData(nameof(Get_Random_Cards_Theroy_Data), 25)]
+        public void Deal_ShuffleAtIndexShouldNotEqual_Theory(Card[] items)
+        {
+            var deck = new Deck(new ShuffleService<Card>(), initialCards: items, isShuffled: true);
+            var index = items.Length - 1;
+            var expected = items[index];
+            Assert.NotEqual(expected, deck.Deal(index));
         }
     }
 }

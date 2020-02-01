@@ -26,8 +26,8 @@ namespace CardGames.Shared
             => Random.Next(maxValue);
 
         /// <inheritdoc cref="Random.Next(int, int)" />
-        public static int Next(int maxValue, int minValue)
-            => Random.Next(maxValue, minValue);
+        public static int Next(int minValue, int maxValue)
+            => Random.Next(minValue, maxValue);
 
         /// <inheritdoc cref="Random.NextDouble()" />
         public static double NextDouble()
