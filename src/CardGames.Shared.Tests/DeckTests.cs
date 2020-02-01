@@ -20,7 +20,7 @@ namespace CardGames.Shared.Tests
                 {
                     Enumerable
                         .Range(1, RNG.Next(generateMin, 53))
-                        .Select(_ => new Card((CardNameValue)RNG.Next(0, 14), (Suit)RNG.Next(0, 5)))
+                        .Select(_ => new Card((CardNameValue)RNG.Next(1, 14), (Suit)RNG.Next(1, 5)))
                         .ToArray(),
                 },
             };
