@@ -139,9 +139,9 @@ namespace CardGames.Shared.Models
         [return: NotNull]
         public IEnumerable<Card> DealAll()
         {
-            for (int i = 0; i < _cards.Count; i++)
-                yield return _cards[i];
-            _cards.Clear();
+            int count = _cards.Count;
+            for (int i = 0; i < count; i++)
+                yield return Deal();
         }
     }
 }
