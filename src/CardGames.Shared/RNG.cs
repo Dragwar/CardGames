@@ -11,9 +11,11 @@ namespace CardGames.Shared
     /// </summary>
     public static class RNG
     {
+        /// <inheritdoc cref="System.Random" />
         [ThreadStatic]
         private static Random? _random;
 
+        /// <inheritdoc cref="System.Random" />
         public static Random Random
             => _random ??= new Random(Environment.TickCount + Thread.CurrentThread.ManagedThreadId);
 

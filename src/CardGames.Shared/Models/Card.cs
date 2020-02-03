@@ -1,9 +1,6 @@
 ﻿namespace CardGames.Shared.Models
 {
-    /// <summary>
-    /// Represents a playing card.
-    /// </summary>
-    public class Card
+    public class Card : ICard
     {
         public Suit Suit { get; }
         public CardNameValue Name { get; }
