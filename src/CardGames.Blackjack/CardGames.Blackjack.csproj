@@ -6,4 +6,8 @@
     <Nullable>Enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CardGames.Shared\CardGames.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
