@@ -15,7 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGames.Shared.Tests", "CardGames.Shared.Tests\CardGames.Shared.Tests.csproj", "{967CE10B-15CC-4F1F-9663-39566EE97433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGames.Blackjack.ConsoleApplication", "CardGames.Blackjack.ConsoleApplication\CardGames.Blackjack.ConsoleApplication.csproj", "{B0EC5596-D8CF-4C90-896A-5A9FFD29F06C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGames.Blackjack.ConsoleApplication", "CardGames.Blackjack.ConsoleApplication\CardGames.Blackjack.ConsoleApplication.csproj", "{B0EC5596-D8CF-4C90-896A-5A9FFD29F06C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blackjack", "Blackjack", "{A0E71501-EAA2-49B7-A1D6-C88D8B964763}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Poker", "Poker", "{C7D5E3C9-6EB2-4796-B907-49067744D069}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "War", "War", "{751EF172-DDD7-44E5-857C-3EDB504CBD5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
