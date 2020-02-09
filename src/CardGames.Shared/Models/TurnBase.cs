@@ -18,9 +18,5 @@ namespace CardGames.Shared.Models
             Game = game;
             Player = player;
         }
-
-        public abstract void StartTurn();
-
-        public abstract void EndTurn();
     }
 }

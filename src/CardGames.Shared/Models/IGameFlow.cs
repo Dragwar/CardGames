@@ -35,10 +35,6 @@ namespace CardGames.Shared.Models
         /// </summary>
         IList<ITurn<TCard>> TurnHistory { get; }
 
-        void EndGame(IPlayer<TCard> winner);
-
         void SetTurnOrder<TKey>(Func<IPlayer<TCard>, TKey> reorderFunction);
-
-        void StartGame();
     }
 }

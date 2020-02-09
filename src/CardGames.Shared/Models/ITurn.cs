@@ -29,9 +29,5 @@ namespace CardGames.Shared.Models
         /// The owner of this turn.
         /// </summary>
         IPlayer<TCard> Player { get; }
-
-        void StartTurn();
-
-        void EndTurn();
     }
 }

@@ -37,9 +37,5 @@ namespace CardGames.Shared.Models
             _players.Clear();
             tempList.ForEach(_players.Add);
         }
-
-        public abstract void StartGame();
-
-        public abstract void EndGame(IPlayer<TCard> winner);
     }
 }
