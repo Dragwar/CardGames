@@ -2,3 +2,6 @@
 
 # RCS1102: Make class static.
 dotnet_diagnostic.RCS1102.severity = none
+
+# CA1034: Nested types should not be visible
+dotnet_diagnostic.CA1034.severity = none
