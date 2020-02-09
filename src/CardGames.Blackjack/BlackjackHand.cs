@@ -15,15 +15,9 @@ namespace CardGames.Blackjack
         public IReadOnlyList<IBlackjackCard> Cards
             => new ReadOnlyCollection<IBlackjackCard>(_cards);
 
-        public IBlackjackPlayer Owner { get; }
-
-        IPlayer<IBlackjackCard> IHand<IBlackjackCard>.Owner
-            => Owner;
-
-        public BlackjackHand(IBlackjackPlayer owner, IList<IBlackjackCard> cards)
+        public BlackjackHand(IList<IBlackjackCard> cards)
         {
             _cards = cards;
-            Owner = owner;
 
             if (cards.Count > MAX_CARD_COUNT)
             {
@@ -31,10 +25,9 @@ namespace CardGames.Blackjack
             }
         }
 
-        public BlackjackHand(IBlackjackPlayer owner)
+        public BlackjackHand()
         {
             _cards = new List<IBlackjackCard>(MAX_CARD_COUNT) { Capacity = MAX_CARD_COUNT };
-            Owner = owner;
         }
 
         public void Sort()

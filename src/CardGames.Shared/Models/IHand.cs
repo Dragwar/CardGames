@@ -9,11 +9,6 @@ namespace CardGames.Shared.Models
         where TCard : class, ICard
     {
         /// <summary>
-        /// Owner of this hand.
-        /// </summary>
-        IPlayer<TCard> Owner { get; }
-
-        /// <summary>
         /// Cards belonging to this hand.
         /// </summary>
         IReadOnlyList<TCard> Cards { get; }

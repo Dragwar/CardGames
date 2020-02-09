@@ -11,18 +11,14 @@ namespace CardGames.Shared.Models
         public IReadOnlyList<ICard> Cards
             => new ReadOnlyCollection<ICard>(_cards);
 
-        public IPlayer<ICard> Owner { get; }
-
-        public Hand(IPlayer<ICard> owner, IList<ICard> cards)
+        public Hand(IList<ICard> cards)
         {
             _cards = cards;
-            Owner = owner;
         }
 
-        public Hand(IPlayer<ICard> owner)
+        public Hand()
         {
             _cards = new List<ICard>(26);
-            Owner = owner;
         }
 
         public void Sort()
