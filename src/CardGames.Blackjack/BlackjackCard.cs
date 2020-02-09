@@ -1,7 +1,9 @@
 ﻿using CardGames.Shared;
+using System.Diagnostics;
 
 namespace CardGames.Blackjack
 {
+    [DebuggerDisplay("[{" + nameof(Value) + "}] {" + nameof(Name) + "} -- {" + nameof(Suit) + "}")]
     public class BlackjackCard : IBlackjackCard
     {
         public CardNameValue Name { get; }

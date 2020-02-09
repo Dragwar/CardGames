@@ -47,5 +47,27 @@ namespace CardGames.Blackjack
 
         void IGameFlow<IBlackjackCard>.SetTurnOrder<TKey>(Func<IPlayer<IBlackjackCard>, TKey> reorderFunction)
             => SetTurnOrder(reorderFunction);
+
+        public void Deal(IBlackjackPlayer player)
+        {
+            if (!_players.Contains(player))
+            {
+                throw new ArgumentException(
+                    nameof(player),
+                    $"Player not found in this game! {{{player.Name}}}");
+            }
+
+            if (Deck.DealOrDefault() is { } dealtCard)
+            {
+                player.Hand.Add(dealtCard);
+            }
+            else
+            {
+                throw new InvalidOperationException($"The {nameof(Deck)} has no cards left to deal!");
+            }
+        }
+
+        void IGameFlow<IBlackjackCard>.Deal(IPlayer<IBlackjackCard> player)
+            => Deal((IBlackjackPlayer)player);
     }
 }

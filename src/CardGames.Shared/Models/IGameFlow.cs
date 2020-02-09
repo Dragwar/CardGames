@@ -36,5 +36,7 @@ namespace CardGames.Shared.Models
         IList<ITurn<TCard>> TurnHistory { get; }
 
         void SetTurnOrder<TKey>(Func<IPlayer<TCard>, TKey> reorderFunction);
+
+        void Deal(IPlayer<TCard> player);
     }
 }

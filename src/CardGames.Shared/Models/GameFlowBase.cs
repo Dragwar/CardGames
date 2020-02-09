@@ -17,8 +17,6 @@ namespace CardGames.Shared.Models
 
         public string Name { get; }
 
-        public IPlayer<TCard>? CurrentPlayer { get; protected set; }
-
         public IList<ITurn<TCard>> TurnHistory { get; }
 
         public ITurn<TCard>? CurrentTurn { get; protected set; }
@@ -36,6 +34,25 @@ namespace CardGames.Shared.Models
             var tempList = new List<IPlayer<TCard>>(_players.OrderBy(reorderFunction));
             _players.Clear();
             tempList.ForEach(_players.Add);
+        }
+
+        public void Deal(IPlayer<TCard> player)
+        {
+            if (!_players.Contains(player))
+            {
+                throw new ArgumentException(
+                    nameof(player),
+                    $"Player not found in this game! {{{player.Name}}}");
+            }
+
+            if (Deck.DealOrDefault() is { } dealtCard)
+            {
+                player.Hand.Add(dealtCard);
+            }
+            else
+            {
+                throw new InvalidOperationException($"The {nameof(Deck)} has no cards left to deal!");
+            }
         }
     }
 }
