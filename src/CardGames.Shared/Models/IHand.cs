@@ -7,7 +7,7 @@ namespace CardGames.Shared.Models
     /// <summary>
     /// Represents a collection of <typeparamref name="TCard"/>s belonging to an <see cref="Owner"/>.
     /// </summary>
-    public interface IHand<TCard>
+    public interface IHand<TCard> : IEnumerable<TCard>
         where TCard : class, ICard
     {
         /// <summary>

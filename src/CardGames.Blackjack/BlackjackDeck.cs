@@ -2,6 +2,7 @@
 using CardGames.Shared.Models;
 using CardGames.Shared.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -110,5 +111,11 @@ namespace CardGames.Blackjack
             for (int i = 0; i < count; i++)
                 yield return Deal();
         }
+
+        public IEnumerator<IBlackjackCard> GetEnumerator()
+            => Cards.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }

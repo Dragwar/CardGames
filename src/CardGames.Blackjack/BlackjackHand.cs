@@ -1,5 +1,6 @@
 ﻿using CardGames.Blackjack.Exceptions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -116,5 +117,11 @@ namespace CardGames.Blackjack
 
             return removeCount;
         }
+
+        public IEnumerator<IBlackjackCard> GetEnumerator()
+            => Cards.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 }

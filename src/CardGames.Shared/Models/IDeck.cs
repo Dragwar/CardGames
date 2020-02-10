@@ -6,7 +6,7 @@ namespace CardGames.Shared.Models
     /// <summary>
     /// Represents a collection of 52 (<see cref="Deck._totalCardCount"/>) <typeparamref name="TCard"/>s.
     /// </summary>
-    public interface IDeck<TCard>
+    public interface IDeck<TCard> : IEnumerable<TCard>
         where TCard : class, ICard
     {
         /// <summary>
