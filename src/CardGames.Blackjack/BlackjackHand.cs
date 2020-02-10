@@ -17,7 +17,8 @@ namespace CardGames.Blackjack
             => new ReadOnlyCollection<IBlackjackCard>(_cards);
 
         public IBlackjackCard? HighCard
-            => Cards.OrderByDescending(c => c.Value)
+            => Cards
+            .OrderByDescending(c => c.Value)
             .FirstOrDefault();
 
         public int TotalValue
@@ -52,18 +53,31 @@ namespace CardGames.Blackjack
         }
 
         public void Add(IBlackjackCard card)
-            => _cards.Add(card);
+        {
+            _cards.Add(card);
+
+            if (_cards.Count > MAX_CARD_COUNT)
+            {
+                throw new BlackjackHandSizeTooLargeException(this);
+            }
+        }
 
         public void AddRange(IEnumerable<IBlackjackCard> cards)
         {
             if (_cards is List<IBlackjackCard> cardList)
             {
                 cardList.AddRange(cards);
-                return;
+            }
+            else
+            {
+                var temp = new List<IBlackjackCard>(cards);
+                temp.ForEach(_cards.Add);
             }
 
-            var temp = new List<IBlackjackCard>(cards);
-            temp.ForEach(_cards.Add);
+            if (_cards.Count > MAX_CARD_COUNT)
+            {
+                throw new BlackjackHandSizeTooLargeException(this);
+            }
         }
 
         public bool Remove(IBlackjackCard card)

@@ -28,7 +28,9 @@ namespace CardGames.Blackjack
             => Players;
 
         IList<ITurn<IBlackjackCard>> IGameFlow<IBlackjackCard>.TurnHistory
-            => (IList<ITurn<IBlackjackCard>>)TurnHistory;
+            => TurnHistory
+            .Cast<ITurn<IBlackjackCard>>()
+            .ToList();
 
         public BlackjackGameFlow(string name, IBlackjackDeck deck, IList<IBlackjackPlayer> players)
         {

@@ -14,7 +14,8 @@ namespace CardGames.Shared.Models
             => new ReadOnlyCollection<ICard>(_cards);
 
         public ICard? HighCard
-            => Cards.OrderByDescending(c => c.Value)
+            => Cards
+            .OrderByDescending(c => c.Value)
             .FirstOrDefault();
 
         public int TotalValue
