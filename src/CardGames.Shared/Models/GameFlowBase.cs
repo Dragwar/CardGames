@@ -5,38 +5,37 @@ using System.Linq;
 
 namespace CardGames.Shared.Models
 {
-    public abstract class GameFlowBase<TCard> : IGameFlow<TCard>
-        where TCard : class, ICard
+    public abstract class GameFlowBase : IGameFlow
     {
-        protected readonly IList<IPlayer<TCard>> _players;
+        protected readonly IList<IPlayer> _players;
 
-        public IReadOnlyList<IPlayer<TCard>> Players
-            => new ReadOnlyCollection<IPlayer<TCard>>(_players);
+        public IReadOnlyList<IPlayer> Players
+            => new ReadOnlyCollection<IPlayer>(_players);
 
-        public IDeck<TCard> Deck { get; }
+        public IDeck Deck { get; }
 
         public string Name { get; }
 
-        public IList<ITurn<TCard>> TurnHistory { get; }
+        public IList<ITurn> TurnHistory { get; }
 
-        public ITurn<TCard>? CurrentTurn { get; protected set; }
+        public ITurn? CurrentTurn { get; protected set; }
 
-        protected GameFlowBase(string name, IDeck<TCard> deck, IList<IPlayer<TCard>> players)
+        protected GameFlowBase(string name, IDeck deck, IList<IPlayer> players)
         {
             Name = name;
             Deck = deck;
             _players = players;
-            TurnHistory = new List<ITurn<TCard>>(25);
+            TurnHistory = new List<ITurn>(25);
         }
 
-        public virtual void SetTurnOrder<TKey>(Func<IPlayer<TCard>, TKey> reorderFunction)
+        public virtual void SetTurnOrder<TKey>(Func<IPlayer, TKey> reorderFunction)
         {
-            var tempList = new List<IPlayer<TCard>>(_players.OrderBy(reorderFunction));
+            var tempList = new List<IPlayer>(_players.OrderBy(reorderFunction));
             _players.Clear();
             tempList.ForEach(_players.Add);
         }
 
-        public void Deal(IPlayer<TCard> player)
+        public void Deal(IPlayer player)
         {
             if (!_players.Contains(player))
             {

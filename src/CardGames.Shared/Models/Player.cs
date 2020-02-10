@@ -1,11 +1,11 @@
 ﻿namespace CardGames.Shared.Models
 {
-    public class Player : IPlayer<ICard>
+    public class Player : IPlayer
     {
         public string Name { get; set; }
-        public IHand<ICard> Hand { get; set; }
+        public IHand Hand { get; set; }
 
-        public Player(string name, IHand<ICard> hand)
+        public Player(string name, IHand hand)
         {
             Name = name;
             Hand = hand;

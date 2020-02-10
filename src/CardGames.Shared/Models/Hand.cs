@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace CardGames.Shared.Models
 {
-    public class Hand : IHand<ICard>
+    public class Hand : IHand
     {
         private readonly IList<ICard> _cards;
 

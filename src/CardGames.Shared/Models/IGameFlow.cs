@@ -6,19 +6,17 @@ namespace CardGames.Shared.Models
     /// <summary>
     /// Represents the flow of a card game.
     /// </summary>
-    /// <typeparam name="TCard">The type of card being used.</typeparam>
-    public interface IGameFlow<TCard>
-        where TCard : class, ICard
+    public interface IGameFlow
     {
         /// <summary>
         /// The current turn of this game.
         /// </summary>
-        ITurn<TCard>? CurrentTurn { get; }
+        ITurn? CurrentTurn { get; }
 
         /// <summary>
         /// The deck associated with this game.
         /// </summary>
-        IDeck<TCard> Deck { get; }
+        IDeck Deck { get; }
 
         /// <summary>
         /// Name of the game.
@@ -28,15 +26,15 @@ namespace CardGames.Shared.Models
         /// <summary>
         /// The players participating in this game.
         /// </summary>
-        IReadOnlyList<IPlayer<TCard>> Players { get; }
+        IReadOnlyList<IPlayer> Players { get; }
 
         /// <summary>
         /// History of all turns taken during this game.
         /// </summary>
-        IList<ITurn<TCard>> TurnHistory { get; }
+        IList<ITurn> TurnHistory { get; }
 
-        void SetTurnOrder<TKey>(Func<IPlayer<TCard>, TKey> reorderFunction);
+        void SetTurnOrder<TKey>(Func<IPlayer, TKey> reorderFunction);
 
-        void Deal(IPlayer<TCard> player);
+        void Deal(IPlayer player);
     }
 }

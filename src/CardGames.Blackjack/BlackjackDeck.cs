@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace CardGames.Blackjack
 {
-    public class BlackjackDeck : IBlackjackDeck
+    public class BlackjackDeck : IDeck, IBlackjackDeck
     {
         public static readonly int _totalCardCount = Deck._totalCardCount;
         public static readonly int _suitCount = Deck._suitCount;
@@ -32,6 +32,11 @@ namespace CardGames.Blackjack
 
         public IReadOnlyList<IBlackjackCard> Cards
             => new ReadOnlyCollection<IBlackjackCard>(_cards);
+
+        IReadOnlyList<ICard> IDeck.Cards
+            => Cards
+            .Cast<ICard>()
+            .ToList();
 
         public BlackjackDeck(IShuffleService<IBlackjackCard> shuffleService)
         {
@@ -112,8 +117,23 @@ namespace CardGames.Blackjack
                 yield return Deal();
         }
 
+        ICard IDeck.Deal(int? cardIndex)
+            => (ICard)Deal(cardIndex);
+
+        IEnumerable<ICard> IDeck.DealAll()
+            => (IEnumerable<ICard>)DealAll();
+
+        ICard? IDeck.DealOrDefault(int? cardIndex)
+            => DealOrDefault(cardIndex) as ICard;
+
+        ICard? IDeck.Peek(int? cardIndex)
+            => Peek(cardIndex) as ICard;
+
         public IEnumerator<IBlackjackCard> GetEnumerator()
             => Cards.GetEnumerator();
+
+        IEnumerator<ICard> IEnumerable<ICard>.GetEnumerator()
+            => Cards.Cast<ICard>().GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();

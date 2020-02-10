@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CardGames.Shared.Models
 {
     /// <summary>
-    /// Represents a collection of <typeparamref name="TCard"/>s belonging to an <see cref="Owner"/>.
+    /// Represents a collection of <see cref="ICard"/>s belonging to an <see cref="Owner"/>.
     /// </summary>
-    public interface IHand<TCard> : IEnumerable<TCard>
-        where TCard : class, ICard
+    public interface IHand : IEnumerable<ICard>
     {
         /// <summary>
         /// Cards belonging to this hand.
         /// </summary>
-        IReadOnlyList<TCard> Cards { get; }
+        IReadOnlyList<ICard> Cards { get; }
 
         /// <summary>
-        /// The Card with the highest value within this hand. (based on <see cref="TCard.Value"/>)
+        /// The Card with the highest value within this hand. (based on <see cref="ICard.Value"/>)
         /// </summary>
-        TCard? HighCard { get; }
+        ICard? HighCard { get; }
 
         /// <summary>
-        /// The sum of all the cards in this hand. (based on <see cref="TCard.Value"/>)
+        /// The sum of all the cards in this hand. (based on <see cref="ICard.Value"/>)
         /// </summary>
         int TotalValue { get; }
 
@@ -32,19 +30,19 @@ namespace CardGames.Shared.Models
 
         /// <inheritdoc cref="List{T}.Add(T)" />
         /// <param name="card"><inheritdoc cref="List{T}.Add(T)" /></param>
-        void Add(TCard card);
+        void Add(ICard card);
 
         /// <inheritdoc cref="List{T}.AddRange(IEnumerable{T})" />
         /// <param name="cards"><inheritdoc cref="List{T}.AddRange(IEnumerable{T})" /></param>
-        void AddRange(IEnumerable<TCard> cards);
+        void AddRange(IEnumerable<ICard> cards);
 
         /// <inheritdoc cref="List{T}.Remove(T)" />
-        bool Remove(TCard card);
+        bool Remove(ICard card);
 
         /// <inheritdoc cref="List{T}.RemoveRange(int, int)" />
         void RemoveRange(int index, int count);
 
         /// <inheritdoc cref="List{T}.RemoveAll(Predicate{T})" />
-        int RemoveAll(Func<TCard, bool> match);
+        int RemoveAll(Func<ICard, bool> match);
     }
 }

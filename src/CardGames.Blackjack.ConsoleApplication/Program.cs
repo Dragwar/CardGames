@@ -82,25 +82,13 @@ namespace CardGames.Blackjack.ConsoleApplication
             sb.Clear();
 
             var orderedPlayers = game.Players
-                .Select(p =>
-                {
-                    var handValue = p.Hand.Cards.Sum(c => c.Value);
-                    var highCard = p.Hand.Cards.OrderByDescending(c => c.Value).First();
-                    return (
-                        Player: p,
-                        HandValue: handValue,
-                        IsBust: handValue >= 22,
-                        IsBlackJack: handValue % 21 == 0,
-                        HighCard: highCard
-                    );
-                })
-                .Where(p => !p.IsBust)
-                .OrderByDescending(p => p.HandValue)
+                .Where(p => !p.Hand.IsBust)
+                .OrderByDescending(p => p.Hand.TotalValue)
                 .ToArray();
 
-            var winner = orderedPlayers.Select(p => p.Player).First();
+            var winner = orderedPlayers[0];
 
-            Console.WriteLine($"\nWINNER: {winner.Name}! ({winner.Hand.Cards.Sum(c => c.Value)})\n{string.Join('\n', winner.Hand.Cards.Select(CardString))}\n");
+            Console.WriteLine($"\nWINNER: {winner.Name}! ({winner.Hand.TotalValue})\n{string.Join('\n', winner.Hand.Cards.Select(CardString))}\n");
 
             Console.Write("\nPress (R/r) to restart or any other key to exit ...");
             var key = Console.ReadKey().Key;

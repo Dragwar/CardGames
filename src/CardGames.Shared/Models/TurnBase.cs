@@ -3,17 +3,16 @@ using System.Collections.Generic;
 
 namespace CardGames.Shared.Models
 {
-    public abstract class TurnBase<TCard> : ITurn<TCard>
-        where TCard : class, ICard
+    public abstract class TurnBase : ITurn
     {
-        public abstract IList<Action<IGameFlow<TCard>>> AvailableActions { get; protected set; }
+        public abstract IList<Action<IGameFlow>> AvailableActions { get; protected set; }
 
-        public IGameFlow<TCard> Game { get; }
+        public IGameFlow Game { get; }
 
-        public IPlayer<TCard> Player { get; }
-        public abstract Action<IGameFlow<TCard>>? ChosenAction { get; }
+        public IPlayer Player { get; }
+        public abstract Action<IGameFlow>? ChosenAction { get; }
 
-        protected TurnBase(IGameFlow<TCard> game, IPlayer<TCard> player)
+        protected TurnBase(IGameFlow game, IPlayer player)
         {
             Game = game;
             Player = player;

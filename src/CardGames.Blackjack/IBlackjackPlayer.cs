@@ -1,8 +1,8 @@
-﻿using CardGames.Shared.Models;
-
-namespace CardGames.Blackjack
+﻿namespace CardGames.Blackjack
 {
-    public interface IBlackjackPlayer : IPlayer<IBlackjackCard>
+    public interface IBlackjackPlayer
     {
+        IBlackjackHand Hand { get; set; }
+        string Name { get; set; }
     }
 }

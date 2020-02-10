@@ -1,10 +1,9 @@
 ﻿namespace CardGames.Shared.Models
 {
     /// <summary>
-    /// Represents a player of a <typeparamref name="TCard"/> game.
+    /// Represents a player of a <see cref="ICard"/> game.
     /// </summary>
-    public interface IPlayer<TCard>
-        where TCard : class, ICard
+    public interface IPlayer
     {
         /// <summary>
         /// Name of the player.
@@ -14,6 +13,6 @@
         /// <summary>
         /// player's hand of cards.
         /// </summary>
-        public IHand<TCard> Hand { get; set; }
+        public IHand Hand { get; set; }
     }
 }

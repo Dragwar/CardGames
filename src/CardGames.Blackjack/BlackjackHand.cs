@@ -1,4 +1,5 @@
 ﻿using CardGames.Blackjack.Exceptions;
+using CardGames.Shared.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace CardGames.Blackjack
 {
-    public class BlackjackHand : IBlackjackHand
+    public class BlackjackHand : IHand, IBlackjackHand
     {
         public const int MAX_CARD_COUNT = 14;
 
@@ -27,8 +28,16 @@ namespace CardGames.Blackjack
         public bool IsBust
             => TotalValue >= 22;
 
-        public bool IsBlackJack
+        public bool IsBlackjack
             => TotalValue % 21 == 0;
+
+        IReadOnlyList<ICard> IHand.Cards
+            => Cards
+            .Cast<ICard>()
+            .ToList();
+
+        ICard? IHand.HighCard
+            => HighCard as ICard;
 
         public BlackjackHand(IList<IBlackjackCard> cards)
         {
@@ -132,8 +141,25 @@ namespace CardGames.Blackjack
             return removeCount;
         }
 
+        public void Add(ICard card)
+            => Add(card);
+
+        public void AddRange(IEnumerable<ICard> cards)
+            => AddRange(cards);
+
+        public bool Remove(ICard card)
+            => Remove(card);
+
+        public int RemoveAll(Func<ICard, bool> match)
+            => RemoveAll(match);
+
         public IEnumerator<IBlackjackCard> GetEnumerator()
             => Cards.GetEnumerator();
+
+        IEnumerator<ICard> IEnumerable<ICard>.GetEnumerator()
+            => Cards
+            .Cast<ICard>()
+            .GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();

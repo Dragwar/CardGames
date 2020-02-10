@@ -4,14 +4,14 @@ using System.Diagnostics;
 namespace CardGames.Blackjack
 {
     [DebuggerDisplay("{" + nameof(Name) + "}")]
-    public class BlackjackPlayer : IBlackjackPlayer
+    public class BlackjackPlayer : IPlayer, IBlackjackPlayer
     {
         public string Name { get; set; }
         public IBlackjackHand Hand { get; set; }
 
-        IHand<IBlackjackCard> IPlayer<IBlackjackCard>.Hand
+        IHand IPlayer.Hand
         {
-            get => Hand;
+            get => (IHand)Hand;
             set => Hand = value as IBlackjackHand ?? Hand;
         }
 

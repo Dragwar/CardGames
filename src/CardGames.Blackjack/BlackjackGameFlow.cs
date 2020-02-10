@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace CardGames.Blackjack
 {
-    public class BlackjackGameFlow : IBlackjackGameFlow
+    public class BlackjackGameFlow : IGameFlow, IBlackjackGameFlow
     {
         private readonly IList<IBlackjackPlayer> _players;
 
-        public ITurn<IBlackjackCard>? CurrentTurn { get; set; }
+        public IBlackjackTurn? CurrentTurn { get; set; }
 
         public IBlackjackDeck Deck { get; }
 
@@ -21,15 +21,20 @@ namespace CardGames.Blackjack
 
         public IList<IBlackjackTurn> TurnHistory { get; }
 
-        IDeck<IBlackjackCard> IGameFlow<IBlackjackCard>.Deck
-            => Deck;
+        ITurn? IGameFlow.CurrentTurn
+            => CurrentTurn as ITurn;
 
-        IReadOnlyList<IPlayer<IBlackjackCard>> IGameFlow<IBlackjackCard>.Players
-            => Players;
+        IDeck IGameFlow.Deck
+            => (IDeck)Deck;
 
-        IList<ITurn<IBlackjackCard>> IGameFlow<IBlackjackCard>.TurnHistory
+        IReadOnlyList<IPlayer> IGameFlow.Players
+            => Players
+            .Cast<IPlayer>()
+            .ToList();
+
+        IList<ITurn> IGameFlow.TurnHistory
             => TurnHistory
-            .Cast<ITurn<IBlackjackCard>>()
+            .Cast<ITurn>()
             .ToList();
 
         public BlackjackGameFlow(string name, IBlackjackDeck deck, IList<IBlackjackPlayer> players)
@@ -46,9 +51,6 @@ namespace CardGames.Blackjack
             _players.Clear();
             tempList.ForEach(_players.Add);
         }
-
-        void IGameFlow<IBlackjackCard>.SetTurnOrder<TKey>(Func<IPlayer<IBlackjackCard>, TKey> reorderFunction)
-            => SetTurnOrder(reorderFunction);
 
         public void Deal(IBlackjackPlayer player)
         {
@@ -69,7 +71,10 @@ namespace CardGames.Blackjack
             }
         }
 
-        void IGameFlow<IBlackjackCard>.Deal(IPlayer<IBlackjackCard> player)
+        public void SetTurnOrder<TKey>(Func<IPlayer, TKey> reorderFunction)
+            => SetTurnOrder((Func<IBlackjackPlayer, TKey>)reorderFunction);
+
+        public void Deal(IPlayer player)
             => Deal((IBlackjackPlayer)player);
     }
 }

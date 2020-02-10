@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace CardGames.Shared.Models
 {
-    public class Deck : IDeck<ICard>
+    public class Deck : IDeck
     {
         public static readonly int _totalCardCount = SortedCards.Count;
 
