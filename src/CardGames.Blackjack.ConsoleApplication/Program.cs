@@ -1,4 +1,5 @@
 ﻿using CardGames.Shared;
+using CardGames.Shared.Models;
 using CardGames.Shared.Services;
 using CardGames.Shared.Services.Extensions;
 using System;
@@ -70,12 +71,12 @@ namespace CardGames.Blackjack.ConsoleApplication
                         .AppendLine();
                 }
 
-                var handValue = player.Hand.Cards.Sum(c => c.Value);
+                var handValue = player.Hand.TotalValue;
                 sb.AppendFormat("\tHand:\n\t\tValue: {0}", handValue)
                     .AppendLine()
-                    .AppendFormat("\t\tIsBlackjack: {0}", handValue == 21)
+                    .AppendFormat("\t\tIsBlackjack: {0}", player.Hand.IsBlackjack)
                     .AppendLine()
-                    .AppendFormat("\t\tIsBust: {0}", handValue >= 22)
+                    .AppendFormat("\t\tIsBust: {0}", player.Hand.IsBust)
                     .AppendLine();
             }
             Console.WriteLine(sb.ToString());
@@ -97,7 +98,7 @@ namespace CardGames.Blackjack.ConsoleApplication
                 Main(args);
             }
 
-            static string CardString(IBlackjackCard card)
+            static string CardString(ICard card)
                 => string.Format("[{0,2}] {1,5} -- {2,5}", card.Value, card.Name, card.Suit);
         }
     }

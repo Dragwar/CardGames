@@ -142,16 +142,16 @@ namespace CardGames.Blackjack
         }
 
         public void Add(ICard card)
-            => Add(card);
+            => Add((IBlackjackCard)card);
 
         public void AddRange(IEnumerable<ICard> cards)
-            => AddRange(cards);
+            => AddRange(cards.Cast<IBlackjackCard>());
 
         public bool Remove(ICard card)
-            => Remove(card);
+            => Remove((IBlackjackCard)card);
 
         public int RemoveAll(Func<ICard, bool> match)
-            => RemoveAll(match);
+            => RemoveAll((Func<IBlackjackCard, bool>)match);
 
         public IEnumerator<IBlackjackCard> GetEnumerator()
             => Cards.GetEnumerator();

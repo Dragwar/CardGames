@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using CardGames.Shared.Models;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CardGames.Blackjack
 {
-    public interface IBlackjackDeck
+    public interface IBlackjackDeck : IDeck, IEnumerable<IBlackjackCard>
     {
-        IReadOnlyList<IBlackjackCard> Cards { get; }
+        //IReadOnlyList<IBlackjackCard> Cards { get; }
 
-        IBlackjackCard Deal([AllowNull] int? cardIndex = null);
-        IEnumerable<IBlackjackCard> DealAll();
-        IBlackjackCard? DealOrDefault([AllowNull] int? cardIndex = null);
-        void FillDeck(bool isShuffled = true);
-        IEnumerator<IBlackjackCard> GetEnumerator();
-        IBlackjackCard? Peek([AllowNull] int? cardIndex = null);
-        void Shuffle();
+        //IBlackjackCard Deal([AllowNull] int? cardIndex = null);
+
+        //IEnumerable<IBlackjackCard> DealAll();
+
+        //IBlackjackCard? DealOrDefault([AllowNull] int? cardIndex = null);
+
+        //void FillDeck(bool isShuffled = true);
+
+        //IBlackjackCard? Peek([AllowNull] int? cardIndex = null);
+
+        //void Shuffle();
     }
 }

@@ -1,11 +1,11 @@
-﻿using CardGames.Shared;
+﻿using CardGames.Shared.Models;
 
 namespace CardGames.Blackjack
 {
-    public interface IBlackjackCard
+    public interface IBlackjackCard : ICard
     {
-        CardNameValue Name { get; }
-        Suit Suit { get; }
-        int Value { get; }
+        //CardNameValue Name { get; }
+        //Suit Suit { get; }
+        //int Value { get; }
     }
 }
