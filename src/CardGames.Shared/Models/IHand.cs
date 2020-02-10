@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CardGames.Shared.Models
 {
@@ -13,6 +14,16 @@ namespace CardGames.Shared.Models
         /// Cards belonging to this hand.
         /// </summary>
         IReadOnlyList<TCard> Cards { get; }
+
+        /// <summary>
+        /// The Card with the highest value within this hand. (based on <see cref="TCard.Value"/>)
+        /// </summary>
+        TCard? HighCard { get; }
+
+        /// <summary>
+        /// The sum of all the cards in this hand. (based on <see cref="TCard.Value"/>)
+        /// </summary>
+        int TotalValue { get; }
 
         /// <summary>
         /// Sorts by <see cref="ICard.Value"/> ascending.

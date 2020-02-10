@@ -12,6 +12,13 @@ namespace CardGames.Shared.Models
         public IReadOnlyList<ICard> Cards
             => new ReadOnlyCollection<ICard>(_cards);
 
+        public ICard? HighCard
+            => Cards.OrderByDescending(c => c.Value)
+            .FirstOrDefault();
+
+        public int TotalValue
+            => Cards.Sum(c => c.Value);
+
         public Hand(IList<ICard> cards)
         {
             _cards = cards;

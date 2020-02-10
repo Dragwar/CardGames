@@ -15,6 +15,19 @@ namespace CardGames.Blackjack
         public IReadOnlyList<IBlackjackCard> Cards
             => new ReadOnlyCollection<IBlackjackCard>(_cards);
 
+        public IBlackjackCard? HighCard
+            => Cards.OrderByDescending(c => c.Value)
+            .FirstOrDefault();
+
+        public int TotalValue
+            => Cards.Sum(c => c.Value);
+
+        public bool IsBust
+            => TotalValue >= 22;
+
+        public bool IsBlackJack
+            => TotalValue % 21 == 0;
+
         public BlackjackHand(IList<IBlackjackCard> cards)
         {
             _cards = cards;
