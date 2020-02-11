@@ -29,8 +29,9 @@ namespace CardGames.Blackjack
             => (IGameFlow)Game;
 
         public bool HasBeenExcuted
-            => ChosenAction?.State == TurnActionState.Ended
-            || ChosenAction?.State == TurnActionState.Failed;
+            => ChosenAction is { }
+            && ChosenAction.State != TurnActionState.Started
+            && ChosenAction.State != TurnActionState.NotStarted;
 
         public BlackjackTurn(
             IBlackjackGameFlow game,
