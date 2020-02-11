@@ -11,12 +11,12 @@ namespace CardGames.Shared.Models
         /// <summary>
         /// Represents the actions that the <see cref="Player"/> can take during this turn.
         /// </summary>
-        IList<Action<IGameFlow>> AvailableActions { get; }
+        IList<ITurnAction> AvailableActions { get; }
 
         /// <summary>
         /// The action perform during this turn.
         /// </summary>
-        Action<IGameFlow>? ChosenAction { get; }
+        ITurnAction? ChosenAction { get; }
 
         /// <summary>
         /// The game that this turn belongs to.

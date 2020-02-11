@@ -1,5 +1,4 @@
 ﻿using CardGames.Shared.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,9 +6,9 @@ namespace CardGames.Blackjack
 {
     public class BlackjackTurn : ITurn, IBlackjackTurn
     {
-        public IList<Action<IBlackjackGameFlow>> AvailableActions { get; }
+        public IList<IBlackjackTurnAction> AvailableActions { get; }
 
-        public Action<IBlackjackGameFlow>? ChosenAction { get; set; }
+        public IBlackjackTurnAction? ChosenAction { get; set; }
 
         public IBlackjackGameFlow Game { get; }
 
@@ -18,13 +17,13 @@ namespace CardGames.Blackjack
         IPlayer ITurn.Player
             => (IPlayer)Player;
 
-        IList<Action<IGameFlow>> ITurn.AvailableActions
+        IList<ITurnAction> ITurn.AvailableActions
             => AvailableActions
-            .Cast<Action<IGameFlow>>()
+            .Cast<ITurnAction>()
             .ToList();
 
-        Action<IGameFlow>? ITurn.ChosenAction
-            => ChosenAction as Action<IGameFlow>;
+        ITurnAction? ITurn.ChosenAction
+            => ChosenAction as ITurnAction;
 
         IGameFlow ITurn.Game
             => (IGameFlow)Game;
@@ -32,7 +31,7 @@ namespace CardGames.Blackjack
         public BlackjackTurn(
             IBlackjackGameFlow game,
             IBlackjackPlayer player,
-            IList<Action<IBlackjackGameFlow>> availableActions)
+            IList<IBlackjackTurnAction> availableActions)
         {
             Game = game;
             Player = player;

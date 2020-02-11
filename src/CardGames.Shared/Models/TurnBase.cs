@@ -5,12 +5,12 @@ namespace CardGames.Shared.Models
 {
     public abstract class TurnBase : ITurn
     {
-        public abstract IList<Action<IGameFlow>> AvailableActions { get; protected set; }
+        public abstract IList<ITurnAction> AvailableActions { get; protected set; }
 
         public IGameFlow Game { get; }
 
         public IPlayer Player { get; }
-        public abstract Action<IGameFlow>? ChosenAction { get; }
+        public abstract ITurnAction? ChosenAction { get; }
 
         protected TurnBase(IGameFlow game, IPlayer player)
         {
