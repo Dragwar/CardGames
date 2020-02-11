@@ -13,6 +13,8 @@ namespace CardGames.Shared.Models
         /// </summary>
         IReadOnlyList<ICard> Cards { get; }
 
+        bool IsEmpty { get; }
+
         /// <summary>
         /// Removes a card from the top of the deck or at the <paramref name="cardIndex"/>.
         /// </summary>

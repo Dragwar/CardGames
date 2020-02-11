@@ -34,6 +34,9 @@ namespace CardGames.Shared.Models
         public IReadOnlyList<ICard> Cards
             => new ReadOnlyCollection<ICard>(_cards);
 
+        public bool IsEmpty
+            => Cards.Any();
+
         /// <inheritdoc cref="FillDeck(bool)" />
         /// <param name="shuffleService">A service that is required for shuffling the deck.</param>
         public Deck(IShuffleService<ICard> shuffleService)

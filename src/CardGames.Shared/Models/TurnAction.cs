@@ -13,15 +13,17 @@ namespace CardGames.Shared.Models
         }
 
         private readonly Action<IGameFlow> _action;
+        private readonly Func<IGameFlow, bool>? _canExcuteAction;
 
         public string ActionName { get; }
 
         public State CurrentState { get; private set; }
 
-        public TurnAction(string actionName, Action<IGameFlow> action)
+        public TurnAction(string actionName, Action<IGameFlow> action, Func<IGameFlow, bool>? canExcuteAction)
         {
             ActionName = actionName;
             _action = action;
+            _canExcuteAction = canExcuteAction;
             _action ??= fakeMethod;
             CurrentState = State.NotStarted;
 
@@ -34,5 +36,8 @@ namespace CardGames.Shared.Models
             _action.Invoke(game);
             CurrentState = State.Ended;
         }
+
+        public bool CanExcute(IGameFlow game)
+            => _canExcuteAction?.Invoke(game) ?? true;
     }
 }

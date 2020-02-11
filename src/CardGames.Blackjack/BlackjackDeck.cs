@@ -37,6 +37,8 @@ namespace CardGames.Blackjack
             => Cards
             .Cast<ICard>()
             .ToList();
+        public bool IsEmpty
+            => Cards.Any();
 
         public BlackjackDeck(IShuffleService<IBlackjackCard> shuffleService)
         {

@@ -31,11 +31,11 @@ namespace CardGames.Blackjack
         public BlackjackTurn(
             IBlackjackGameFlow game,
             IBlackjackPlayer player,
-            IList<IBlackjackTurnAction> availableActions)
+            IList<IBlackjackTurnAction>? availableActions = null)
         {
             Game = game;
             Player = player;
-            AvailableActions = availableActions;
+            AvailableActions = availableActions ?? BlackjackTurnAction.AllBlackjackTurnActions.ToList();
         }
     }
 }

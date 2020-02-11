@@ -4,6 +4,8 @@
     {
         string ActionName { get; }
 
+        bool CanExcute(IGameFlow game);
+
         void Excute(IGameFlow game);
     }
 }
