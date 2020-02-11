@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CardGames.Shared.Models
 {
@@ -11,6 +10,7 @@ namespace CardGames.Shared.Models
 
         public IPlayer Player { get; }
         public abstract ITurnAction? ChosenAction { get; }
+        public abstract bool HasBeenExcuted { get; }
 
         protected TurnBase(IGameFlow game, IPlayer player)
         {

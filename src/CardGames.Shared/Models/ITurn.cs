@@ -27,5 +27,7 @@ namespace CardGames.Shared.Models
         /// The owner of this turn.
         /// </summary>
         IPlayer Player { get; }
+
+        bool HasBeenExcuted { get; }
     }
 }

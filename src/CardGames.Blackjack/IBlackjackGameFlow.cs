@@ -16,5 +16,6 @@ namespace CardGames.Blackjack
         //void Deal(IPlayer player);
         //void SetTurnOrder<TKey>(Func<IBlackjackPlayer, TKey> reorderFunction);
         //void SetTurnOrder<TKey>(Func<IPlayer, TKey> reorderFunction);
+        new IList<IBlackjackTurn> TurnOrder { get; }
     }
 }

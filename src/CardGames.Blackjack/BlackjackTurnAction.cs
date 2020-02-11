@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CardGames.Blackjack
 {
-    public class BlackjackTurnAction : IBlackjackTurnAction
+    public class BlackjackTurnAction : ITurnAction, IBlackjackTurnAction
     {
         public enum State
         {
@@ -17,7 +17,17 @@ namespace CardGames.Blackjack
         public static IReadOnlyList<IBlackjackTurnAction> AllBlackjackTurnActions
             => new List<IBlackjackTurnAction>
             {
-                new BlackjackTurnAction("Hit Me", g => g.Deal(g.CurrentTurn!.Player), g => !g.Deck.IsEmpty && g.CurrentTurn is { }),
+                new BlackjackTurnAction(
+                    "Hit Me",
+                    g => g.Deal(g.CurrentTurn!.Player),
+                    g => !g.Deck.IsEmpty && g.CurrentTurn is { },
+                    (sender, e) => 
+                    {
+                        if (sender is IBlackjackTurnAction turnAction)
+                        {
+                            turnAction.
+	                    }
+                    }),
             };
 
         private readonly Action<IBlackjackGameFlow> _action;
@@ -26,15 +36,16 @@ namespace CardGames.Blackjack
         public string ActionName { get; }
         public State CurrentState { get; private set; }
 
-        public BlackjackTurnAction(string actionName, Action<IBlackjackGameFlow> action, Func<IGameFlow, bool>? canExcuteAction)
+        public event EventHandler<State> OnStateChanged = delegate { };
+
+        public BlackjackTurnAction(string actionName, Action<IBlackjackGameFlow> action, Func<IGameFlow, bool>? canExcuteAction, EventHandler<State>? stateChangedListener)
         {
             ActionName = actionName;
             _action = action;
             _canExcuteAction = canExcuteAction;
-            _action ??= fakeMethod;
+            _action ??= delegate { };
             CurrentState = State.NotStarted;
-
-            static void fakeMethod(IBlackjackGameFlow _) { }
+            OnStateChanged += stateChangedListener ?? delegate { };
         }
 
         public void Excute(IBlackjackGameFlow game)

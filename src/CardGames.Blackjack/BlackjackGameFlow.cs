@@ -20,6 +20,12 @@ namespace CardGames.Blackjack
             => new ReadOnlyCollection<IBlackjackPlayer>(_players);
 
         public IList<IBlackjackTurn> TurnHistory { get; }
+        public IList<IBlackjackTurn> TurnOrder { get; }
+
+        IList<ITurn> IGameFlow.TurnOrder
+            => TurnOrder
+            .Cast<ITurn>()
+            .ToList();
 
         ITurn? IGameFlow.CurrentTurn
             => CurrentTurn as ITurn;
@@ -43,13 +49,28 @@ namespace CardGames.Blackjack
             Deck = deck;
             _players = players;
             TurnHistory = new List<IBlackjackTurn>(25);
+            TurnOrder = new List<IBlackjackTurn>(_players.Select(p => new BlackjackTurn(this, p)));
         }
 
         public void SetTurnOrder<TKey>(Func<IBlackjackPlayer, TKey> reorderFunction)
         {
-            var tempList = new List<IBlackjackPlayer>(_players.OrderBy(reorderFunction));
+            var tempPlayerList = new List<IBlackjackPlayer>(_players.OrderBy(reorderFunction));
             _players.Clear();
-            tempList.ForEach(_players.Add);
+            tempPlayerList.ForEach(_players.Add);
+
+            var tempTurnOrderList = new List<IBlackjackTurn>(TurnOrder);
+            TurnOrder.Clear();
+            foreach (var player in tempPlayerList)
+            {
+                for (int i = 0; i < TurnOrder.Count; i++)
+                {
+                    var turn = tempTurnOrderList[i];
+                    if (player == turn.Player)
+                    {
+                        TurnOrder[i] = turn;
+                    }
+                }
+            }
         }
 
         public void Deal(IBlackjackPlayer player)

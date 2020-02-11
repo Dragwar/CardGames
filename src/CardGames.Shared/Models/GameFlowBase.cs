@@ -17,6 +17,7 @@ namespace CardGames.Shared.Models
         public string Name { get; }
 
         public IList<ITurn> TurnHistory { get; }
+        public IList<ITurn> TurnOrder { get; }
 
         public ITurn? CurrentTurn { get; protected set; }
 
@@ -26,6 +27,7 @@ namespace CardGames.Shared.Models
             Deck = deck;
             _players = players;
             TurnHistory = new List<ITurn>(25);
+            TurnOrder = new List<ITurn>(_players.Count); //TODO: figure out how to set TurnOrder
         }
 
         public virtual void SetTurnOrder<TKey>(Func<IPlayer, TKey> reorderFunction)
@@ -33,6 +35,7 @@ namespace CardGames.Shared.Models
             var tempList = new List<IPlayer>(_players.OrderBy(reorderFunction));
             _players.Clear();
             tempList.ForEach(_players.Add);
+            //TODO: figure out how to set TurnOrder
         }
 
         public void Deal(IPlayer player)

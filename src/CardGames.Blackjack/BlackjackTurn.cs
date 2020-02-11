@@ -28,6 +28,10 @@ namespace CardGames.Blackjack
         IGameFlow ITurn.Game
             => (IGameFlow)Game;
 
+        public bool HasBeenExcuted
+            => ChosenAction?.State == TurnActionState.Ended
+            || ChosenAction?.State == TurnActionState.Failed;
+
         public BlackjackTurn(
             IBlackjackGameFlow game,
             IBlackjackPlayer player,
